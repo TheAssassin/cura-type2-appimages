@@ -15,7 +15,7 @@ after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   # make sure only pushes to rewrite create a new release, otherwise pretend PR and upload to transfer.sh
   - if [ "$TRAVIS_BRANCH" != "rewrite" ]; then export TRAVIS_EVENT_TYPE=pull_request; fi
-  - bash ./upload.sh appimageupdate*.AppImage* AppImageUpdate*.AppImage*
+  - bash ./upload.sh Cura*.AppImage*
 
 branches:
   except:
