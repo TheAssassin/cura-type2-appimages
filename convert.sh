@@ -55,7 +55,7 @@ xorriso -indev Cura-*.AppImage -osirrox on -extract / AppDir
 wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 chmod +x appimagetool-x86_64.AppImage
 
-export UPD_INFO="gh-releases-zsync|TheAssassin|cura-type2-appimages|latest|Cura-*.AppImage"
+export UPD_INFO="gh-releases-zsync|TheAssassin|cura-type2-appimages|latest|Cura-*.AppImage.zsync"
 ./appimagetool-x86_64.AppImage -u "$UPD_INFO" AppDir
 
 mv Cura*.AppImage "$OLD_CWD"
