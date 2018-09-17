@@ -2,6 +2,8 @@
 
 This tool "converts" Cura AppImages from type 1 into type 2, which is a lot more modern, more efficient and has better support in tools. The tool is run automatically on Travis CI, uploading the resulting AppImages on GitHub releases. Furthermore, update information is embedded, so users can conveniently upgrade to newer releases which have been built in this repository.
 
+***Note:* An upstream change to type 2 is strongly preferred! Please show your support at https://github.com/Ultimaker/cura-build/issues/136!**
+
 
 ## Download AppImages
 
