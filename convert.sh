@@ -8,12 +8,16 @@ if [ "$TRAVIS_TAG" != "" ]; then
 fi
 
 # if $VERSION is set, build AppImage for that specific version, otherwise use latest version
-URLS=$(curl -s https://api.github.com/repos/Ultimaker/Cura/releases | grep browser_download_url | cut -d: -f2- | cut -d'"' -f2 | grep -E '.AppImage$')
-if [ "$VERSION" == "" ]; then
-    URL=$(echo "$URLS" | head -n1)
-    export VERSION=$(echo "$URL" | python3 -c "import re, sys; print(re.search('Cura-([\d\.]+)\.AppImage', sys.stdin.read()).group(1))")
+if (grep -q "BETA" <<< "$VERSION"); then
+    URL="https://download.ultimaker.com/Cura_open_beta/Cura-${VERSION}.AppImage"
 else
-    URL=$(echo "$URLS" | grep "$VERSION" | head -n1)
+    URLS=$(curl -s https://api.github.com/repos/Ultimaker/Cura/releases | grep browser_download_url | cut -d: -f2- | cut -d'"' -f2 | grep -E '.AppImage$')
+    if [ "$VERSION" == "" ]; then
+        URL=$(echo "$URLS" | head -n1)
+        export VERSION=$(echo "$URL" | python3 -c "import re, sys; print(re.search('Cura-([\d\.]+)\.AppImage', sys.stdin.read()).group(1))")
+    else
+        URL=$(echo "$URLS" | grep "$VERSION" | head -n1)
+    fi
 fi
 
 if [ "$URL" == "" ]; then
