@@ -18,6 +18,11 @@ else
     else
         URL=$(echo "$URLS" | grep "$VERSION" | head -n1)
     fi
+
+    if [ "$URL" == "" ]; then
+        URL="https://download.ultimaker.com/cura/Ultimaker_Cura-${VERSION}.AppImage"
+        curl -I -q "$URL" || URL=""
+    fi
 fi
 
 if [ "$URL" == "" ]; then
@@ -53,8 +58,19 @@ OLD_CWD=$(readlink -f .)
 pushd "$BUILD_DIR"
 
 wget -c "$URL"
-xorriso -indev Cura*.AppImage -osirrox on -extract / AppDir
-rm Cura*.AppImage
+
+# ensure consistent filename
+filename=$(ls -1 *Cura*.AppImage | head -n1)
+if echo "$filename" | grep -q '^Ultimaker_'; then
+    new_filename=$(echo "$filename" | cut -d_ -f2-)
+    mv "$filename" "$new_filename"
+    filename="$new_filename"
+fi
+
+xorriso -indev "$filename" -osirrox on -extract / AppDir
+
+# must clean up before building new AppImage so that we won't accidentally move it to $OLD_CWD like the real AppImage
+rm "$filename"
 
 wget -c https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 chmod +x appimagetool-x86_64.AppImage
