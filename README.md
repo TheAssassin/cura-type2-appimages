@@ -12,7 +12,7 @@ This tool "converts" Cura AppImages from type 1 into type 2, which is a lot more
 
 ## Download AppImages
 
-The AppImages build using this script on Travis CI can be found on the [release page](releases/).
+The AppImages build using this script on Travis CI can be found on the [release page](https://github.com/TheAssassin/cura-type2-appimages/releases/).
 
 
 ## LICENSING
